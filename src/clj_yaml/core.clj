@@ -60,6 +60,6 @@
 (defn parse-string
   ([string keywordize]
      (binding [*keywordize* keywordize]
-       (decode (.load yaml string))))
+       (parse-string string)))
   ([string]
      (decode (.load yaml string))))
