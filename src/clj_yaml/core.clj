@@ -38,10 +38,6 @@
   (decode [data]
     (into #{} data))
 
-  java.util.LinkedHashSet
-  (decode [data]
-    (into #{} data))
-
   java.util.ArrayList
   (decode [data]
     (map decode data))
