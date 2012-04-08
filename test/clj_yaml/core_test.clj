@@ -112,3 +112,12 @@ the-bin: !!binary 0101")
   (binding [*keywordize* false]
     (is  (= "items" (-> hashes-lists-yaml parse-string ffirst))))
     (is  (= "items" (-> hashes-lists-yaml (parse-string false) ffirst))))
+
+(deftest flow-style-setting
+  (let [test-struct [{:name "jon" :age 33} {:name "boo" :age 44}]]
+    (set-flow-style :block)
+    (is (= "- age: 33\n  name: jon\n- age: 44\n  name: boo\n"
+           (generate-string test-struct)))
+    (set-flow-style :flow)
+    (is (= "[{age: 33, name: jon}, {age: 44, name: boo}]\n"
+           (generate-string test-struct)))))
