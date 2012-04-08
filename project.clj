@@ -1,4 +1,4 @@
-(defproject org.clojars.mpenet/clj-yaml "0.3.3"
+(defproject org.clojars.mpenet/clj-yaml "0.3.4"
   :description "YAML encoding and decoding for Clojure using SnakeYAML"
   :url "http://github.com/lancepantz/clj-yaml"
   :dependencies
