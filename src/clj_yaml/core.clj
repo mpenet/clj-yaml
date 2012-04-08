@@ -1,9 +1,19 @@
 (ns clj-yaml.core
-  (:import (org.yaml.snakeyaml Yaml)))
+  (:import [org.yaml.snakeyaml Yaml]
+           [org.yaml.snakeyaml DumperOptions]
+           [org.yaml.snakeyaml DumperOptions$FlowStyle]))
 
 (def ^{:private true} yaml (Yaml.))
 
 (def ^{:dynamic true} *keywordize* true)
+
+(defn set-flow-style [flow-style]
+  (let [flow-style (cond (re-find #"(?i)block" flow-style) DumperOptions$FlowStyle/BLOCK
+                         (re-find #"(?i)flow" flow-style) DumperOptions$FlowStyle/FLOW
+                         (re-find #"(?i)auto" flow-style) DumperOptions$FlowStyle/AUTO)]
+    (def ^{:private true} clj-yaml.core/dumper-options (DumperOptions.))
+    (. clj-yaml.core/dumper-options (setDefaultFlowStyle flow-style))
+    (def ^{:private true} clj-yaml.core/yaml (Yaml. dumper-options))))
 
 (defprotocol YAMLCodec
   (encode [data])
